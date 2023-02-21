@@ -9,30 +9,41 @@ import Foundation
 
 protocol DataService {
     
-    func getData(from path: URL) -> Data?
+    var dataURL: URL { get }
     
-    func saveData(data: Data?, at path: URL)
+    func getData() -> Data?
+    
+    func saveData(data: Data?)
+    
+    func clear()
 }
 
 extension DataService {
     
-    func getData(from path: URL) -> Data? {
+    func getData() -> Data? {
         do {
-            let data = try Data(contentsOf: path)
-            return data
+            return try Data(contentsOf: dataURL)
         } catch {
             print("get data occur error: \(error.localizedDescription)")
             return nil
         }
     }
     
-    func saveData(data: Data?, at path: URL) {
+    func saveData(data: Data?) {
         if let data = data {
             do {
-                try data.write(to: path, options: [.atomic])
+                try data.write(to: dataURL, options: [.atomic])
             } catch {
                 print("save data occur error: \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func clear() {
+        do {
+            try FileManager.default.removeItem(at: dataURL)
+        } catch {
+            
         }
     }
 }

@@ -218,8 +218,13 @@ extension ViewModel {
 
 // MARK: - Profile
 extension ViewModel {
-    func saveImageData(imageData: Data?) {
+    public func saveImageData(imageData: Data?) {
         profileService.saveData(data: imageData)
+    }
+    
+    public func removeImageData() {
+        imageData = nil
+        profileService.clear()
     }
 }
 

@@ -14,13 +14,13 @@ struct SettingView: View {
     
     @EnvironmentObject var vm: ViewModel
     
-    
     #if os(iOS)
     @Environment(\.dismiss) var dismiss
     @State private var isPresentImagePicker: Bool = false
+    @State private var isShowClearProfileImageAlert: Bool = false
     #endif
     
-    @State private var isShowAlert: Bool = false
+    @State private var isShowClearChatHistoryAlert: Bool = false
     
     var body: some View {
         Form {
@@ -32,7 +32,7 @@ struct SettingView: View {
             
             OptionalSettings()
         }
-        .alert(isPresented: $isShowAlert) {
+        .alert(isPresented: $isShowClearChatHistoryAlert) {
             Alert(title: Text("Clear All Chat History?"), primaryButton: .destructive(Text("Confirm"), action: {
                 vm.clearMessageData()
                 #if os(iOS)
@@ -48,6 +48,9 @@ struct SettingView: View {
         #if os(iOS)
         .sheet(isPresented: $isPresentImagePicker) {
             ImagePicker(selectImageData: $vm.imageData, isPresented: $isPresentImagePicker)
+        }
+        .onChange(of: vm.imageData) {newValue in
+            vm.saveImageData(imageData: newValue)
         }
         .navigationTitle("Settings")
         .navigationBarTitleDisplayMode(.inline)
@@ -117,7 +120,7 @@ struct SettingView: View {
             
             if vm.isSaveHistory {
                 Button(role: .destructive) {
-                    isShowAlert.toggle()
+                    isShowClearChatHistoryAlert.toggle()
                 } label: {
                     Text("Clear Chat History")
                         .frame(maxWidth: .infinity)
@@ -165,6 +168,14 @@ struct SettingView: View {
                     Text("Local Profile")
                     Spacer()
                     ProfileView(data: selectImageData)
+                        .onTapGesture {
+                            isShowClearProfileImageAlert.toggle()
+                        }
+                }
+                .alert(isPresented: $isShowClearProfileImageAlert) {
+                    Alert(title: Text("Do you want remove profile image?"), primaryButton: .destructive(Text("Confirm"), action: {
+                        vm.removeImageData()
+                    }), secondaryButton: .cancel())
                 }
             } else {
                 Text("No set profile")

@@ -24,7 +24,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         let image = NSImage(named: "menu-bar")
-        image?.size = NSSize(width: 23, height: 22)
+        image?.size = NSSize(width: 18, height: 18)
+        image?.resizingMode = .stretch
         
         button.image = image
         button.target = self;
