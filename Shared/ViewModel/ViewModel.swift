@@ -128,7 +128,7 @@ class ViewModel: ObservableObject {
             let stream = try await api.askGPT(text: text)
             for try await text in stream {
                 streamText += text
-                message.responseText = streamText.trimmingCharacters(in: .whitespacesAndNewlines)
+                message.responseText = streamText
                 self.messages[self.messages.count - 1] = message
             }
         } catch {

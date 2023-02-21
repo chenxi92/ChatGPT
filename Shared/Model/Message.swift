@@ -42,7 +42,7 @@ extension Message {
         sendImageData: nil,
         sendText: "What is SwiftUI?",
         responseImage: "openai",
-        responseText: "SwiftUI is a user interface framework that allows developers to design and develop user interfaces for iOS, macOS, watchOS, and tvOS applications using Swift, a programming language developed by Apple Inc.")
+        responseText: "SwiftUI is a user interface framework that allows developers to design and develop user interfaces for iOS, macOS, watchOS, and tvOS applications using Swift, a programming language developed by [Apple Inc](https://apple.com).")
     
     static let testError = Message(
         isInteractingWithChatGPT: false,

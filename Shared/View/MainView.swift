@@ -23,6 +23,9 @@ struct MainView: View {
                 BottomView(proxy: proxy)
                 Spacer()
             }
+            .onTapGesture {
+                isTextFieldFocused = false
+            }
             .onChange(of: vm.messages.last?.responseText) { _ in
                 scrollToBottom(proxy: proxy)
             }
@@ -53,9 +56,6 @@ struct MainView: View {
                         }
                     }
                 }
-            }
-            .onTapGesture {
-                isTextFieldFocused = false
             }
         }
     }

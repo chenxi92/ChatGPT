@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//import Markdown
 
 struct MessageView: View {
     
@@ -50,7 +51,7 @@ struct MessageView: View {
             VStack(alignment: .leading) {
                 
                 if !message.responseText.isEmpty {
-                    Text(message.responseText)
+                    Text(LocalizedStringKey(message.responseText))
                         .multilineTextAlignment(.leading)
                         .textSelection(.enabled)
                 }
