@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import os
 
 class API {
     private var histories: [String] = []
     private let urlSession = URLSession.shared
-        
+    private let logger: Logger = Logger(subsystem: "ChatGPT", category: "API")
+    
     var config: APIConfig
     
     init(config: APIConfig) {
@@ -26,10 +28,12 @@ class API {
         let (result, response) = try await urlSession.bytes(for: urlRequest)
                 
         guard let httpResponse = response as? HTTPURLResponse else {
+            logger.error("Invalid http response")
             throw "Invalid response"
         }
         
         guard 200...299 ~= httpResponse.statusCode else {
+            logger.error("Bad Response: \(httpResponse.statusCode)")
             throw "Bad Response: \(httpResponse.statusCode)"
         }
         
@@ -50,6 +54,7 @@ class API {
                     self.appendToHistoryList(userText: text, responseText: responseText)
                     continuation.finish()
                 } catch {
+                    logger.error("error: \(error.localizedDescription)")
                     continuation.finish(throwing: error)
                 }
             }

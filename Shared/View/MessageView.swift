@@ -49,9 +49,11 @@ struct MessageView: View {
             
             VStack(alignment: .leading) {
                 
-                Text(message.responseText)
-                    .multilineTextAlignment(.leading)
-                    .textSelection(.enabled)
+                if !message.responseText.isEmpty {
+                    Text(message.responseText)
+                        .multilineTextAlignment(.leading)
+                        .textSelection(.enabled)
+                }
                 
                 if message.isInteractingWithChatGPT {
                     ThreeDotLoadingView()
