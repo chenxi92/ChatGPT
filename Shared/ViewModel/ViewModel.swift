@@ -121,7 +121,7 @@ class ViewModel: ObservableObject {
         isInteractingWithChatGPT = true
         var streamText = ""
         var message = Message.Sender(text: text, sendImageData: imageData)
-        
+        logger.debug("request text: [\(message.sendText)]")
         self.messages.append(message)
         
         do {
@@ -135,9 +135,12 @@ class ViewModel: ObservableObject {
             message.responseError = error.localizedDescription
         }
         
-        logger.debug("response: \(message.responseText)")
+        if let responseError = message.responseError {
+            logger.error("response error: \(responseError)")
+        } else {
+            logger.debug("response: \(message.responseText)")
+        }
         message.isInteractingWithChatGPT = false
-        
         self.messages[self.messages.count - 1] = message
         isInteractingWithChatGPT = false
         

@@ -25,7 +25,7 @@ struct ProfileView: View {
         if let data = data, let kImage = kImage(data: data) {
             kImage
                 .toImage()
-                .resizable()
+                .resizeToCircle()
         } else if let systemName = systemName {
             Image(systemName: systemName)
                 .resizeToCircle()
