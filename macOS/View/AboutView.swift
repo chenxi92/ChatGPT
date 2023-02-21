@@ -29,9 +29,9 @@ struct AboutView: View {
             
             Text(Bundle.main.copyright)
         }
+        .frame(minWidth: 300, maxWidth: 300)
         .font(.body)
         .padding()
-        .frame(minWidth: 300, maxWidth: 300)
     }
 }
 
