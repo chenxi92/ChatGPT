@@ -27,7 +27,11 @@ class ViewModel: ObservableObject {
     
     @AppStorage("APISettting.basePrompt")
     var basePrompt: String =
-        "You are ChatGPT, a large language model trained by OpenAI. Respond conversationally. Do not answer as the user. Current date: \(dateFormatter.string(from: Date()))"
+        "You are ChatGPT, a large language model trained by OpenAI."
+        + "Respond conversationally."
+        + "Do not answer as the user."
+        + "Use the Markdown style text to response user."
+        + "Current date: \(dateFormatter.string(from: Date()))"
         + "\n"
         + "User: Hello\n"
         + "ChatGPT: Hello! How can I help you today? <|im_end|>\n"

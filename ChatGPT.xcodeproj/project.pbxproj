@@ -17,6 +17,7 @@
 		6C30875E29A5BC57006371BD /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30875C29A5BC57006371BD /* View+Extension.swift */; };
 		6C30876029A5C229006371BD /* PrimaryActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30875F29A5C229006371BD /* PrimaryActionButtonStyle.swift */; };
 		6C30876129A5C229006371BD /* PrimaryActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30875F29A5C229006371BD /* PrimaryActionButtonStyle.swift */; };
+		6C30876729A5C924006371BD /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6C30876629A5C924006371BD /* MarkdownUI */; };
 		6CBE6586299F4F45007CF6B7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE6585299F4F45007CF6B7 /* SettingView.swift */; };
 		6CBE6587299F4F45007CF6B7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE6585299F4F45007CF6B7 /* SettingView.swift */; };
 		6CBE6590299F5D27007CF6B7 /* ClearableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE658F299F5D27007CF6B7 /* ClearableTextField.swift */; };
@@ -43,6 +44,7 @@
 		6CBE65BD29A383F6007CF6B7 /* MainWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE65BC29A383F6007CF6B7 /* MainWindowController.swift */; };
 		6CBE65BF29A45CD6007CF6B7 /* SettingWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE65BE29A45CD6007CF6B7 /* SettingWindowController.swift */; };
 		6CBE65C129A45FAD007CF6B7 /* BaseWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE65C029A45FAD007CF6B7 /* BaseWindowController.swift */; };
+		6CCB02EE29A5DB7000F3BC85 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6CCB02ED29A5DB7000F3BC85 /* MarkdownUI */; };
 		6CE85ACF299F307E00F7B184 /* ChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE85ABF299F307D00F7B184 /* ChatGPTApp.swift */; };
 		6CE85AD1299F307E00F7B184 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE85AC0299F307D00F7B184 /* ContentView.swift */; };
 		6CE85AD3299F307E00F7B184 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CE85AC1299F307E00F7B184 /* Assets.xcassets */; };
@@ -101,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C30876729A5C924006371BD /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CCB02EE29A5DB7000F3BC85 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +195,13 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		6CCB02EC29A5DB7000F3BC85 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6CE85AB9299F307C00F7B184 = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +209,7 @@
 				6CBE65AD29A3716D007CF6B7 /* iOS */,
 				6CE85ACD299F307E00F7B184 /* macOS */,
 				6CE85AC7299F307E00F7B184 /* Products */,
+				6CCB02EC29A5DB7000F3BC85 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -290,6 +302,9 @@
 			dependencies = (
 			);
 			name = "ChatGPT (iOS)";
+			packageProductDependencies = (
+				6C30876629A5C924006371BD /* MarkdownUI */,
+			);
 			productName = "ChatGPT (iOS)";
 			productReference = 6CE85AC6299F307E00F7B184 /* ChatGPT.app */;
 			productType = "com.apple.product-type.application";
@@ -307,6 +322,9 @@
 			dependencies = (
 			);
 			name = "ChatGPT (macOS)";
+			packageProductDependencies = (
+				6CCB02ED29A5DB7000F3BC85 /* MarkdownUI */,
+			);
 			productName = "ChatGPT (macOS)";
 			productReference = 6CE85ACC299F307E00F7B184 /* ChatGPT.app */;
 			productType = "com.apple.product-type.application";
@@ -338,6 +356,9 @@
 				Base,
 			);
 			mainGroup = 6CE85AB9299F307C00F7B184;
+			packageReferences = (
+				6C30876529A5C924006371BD /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+			);
 			productRefGroup = 6CE85AC7299F307E00F7B184 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -708,6 +729,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6C30876529A5C924006371BD /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = exactVersion;
+				version = 1.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6C30876629A5C924006371BD /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C30876529A5C924006371BD /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		6CCB02ED29A5DB7000F3BC85 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C30876529A5C924006371BD /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6CE85ABA299F307C00F7B184 /* Project object */;
 }

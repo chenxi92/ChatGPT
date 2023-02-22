@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-//import Markdown
+import MarkdownUI
+
 
 struct MessageView: View {
     
@@ -22,6 +23,7 @@ struct MessageView: View {
             ResponseView()
             Divider()
         }
+        .textSelection(.enabled)
     }
     
     func RequestRow() -> some View {
@@ -51,9 +53,15 @@ struct MessageView: View {
             VStack(alignment: .leading) {
                 
                 if !message.responseText.isEmpty {
-                    Text(LocalizedStringKey(message.responseText))
-                        .multilineTextAlignment(.leading)
-                        .textSelection(.enabled)
+                    Markdown(message.responseText)
+                        .markdownStyle(
+                            MarkdownStyle(
+                                font: .system(.body, design: .serif),
+                                measurements: .init(
+                                    codeFontScale: 0.9
+                                )
+                            )
+                        )
                 }
                 
                 if message.isInteractingWithChatGPT {
@@ -107,6 +115,10 @@ struct MessageRowView_Previews: PreviewProvider {
         NavigationView {
             ScrollView {
                 MessageView(message: .testNormal, retryCallback: { messageRow in
+                    
+                })
+                
+                MessageView(message: .testNormal2, retryCallback: { messageRow in
                     
                 })
                     
