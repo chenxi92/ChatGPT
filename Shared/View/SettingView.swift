@@ -116,9 +116,11 @@ struct SettingView: View {
             Toggle("Save Chat History", isOn: $vm.isSaveHistory)
                 .toggleStyle(.switch)
             
-            if !vm.isSaveHistory {
+            if vm.isSaveHistory {
                 Button {
-                    isShowClearChatHistoryAlert.toggle()
+                    withAnimation(.spring()) {
+                        isShowClearChatHistoryAlert.toggle()
+                    }
                 } label: {
                     Text("Clear Chat History")
                 }

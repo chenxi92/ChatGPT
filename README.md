@@ -1,5 +1,5 @@
 # ChatGPT
-A macOS and iOS App to communicate with ChatGPT.
+A macOS menu bar App and iOS App to communicate with ChatGPT.
 
 
 
@@ -18,3 +18,5 @@ Inspired by the following projects.
 [ChatGPTSwiftUI](https://github.com/alfianlosari/ChatGPTSwiftUI)
 
 [OpenAISwift](https://github.com/adamrushy/OpenAISwift)
+
+[swift-markdown-ui](https://github.com/gonzalezreal/swift-markdown-ui)

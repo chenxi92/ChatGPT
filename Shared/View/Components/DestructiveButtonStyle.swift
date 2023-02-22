@@ -11,8 +11,12 @@ struct DestructiveButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
+        #if os(iOS)
             .padding(.vertical, 10)
             .padding(.horizontal, 15)
+        #else
+            .padding(.vertical, 7)
+        #endif
             .font(.body.bold())
             .background(.red)
             .foregroundColor(configuration.isPressed ? .white : .black)
