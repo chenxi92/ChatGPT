@@ -32,13 +32,11 @@ struct SettingView: View {
             
             OptionalSettings()
         }
-        .alert(isPresented: $isShowClearChatHistoryAlert) {
-            Alert(title: Text("Clear All Chat History?"), primaryButton: .destructive(Text("Confirm"), action: {
-                vm.clearMessageData()
-                #if os(iOS)
-                dismiss()
-                #endif
-            }), secondaryButton: .cancel())
+        .destructiveAlert(isPresented: $isShowClearChatHistoryAlert, title: "Clear All Chat History?") {
+            vm.clearMessageData()
+            #if os(iOS)
+            dismiss()
+            #endif
         }
         #if os(macOS)
         .padding()
@@ -118,13 +116,13 @@ struct SettingView: View {
             Toggle("Save Chat History", isOn: $vm.isSaveHistory)
                 .toggleStyle(.switch)
             
-            if vm.isSaveHistory {
-                Button(role: .destructive) {
+            if !vm.isSaveHistory {
+                Button {
                     isShowClearChatHistoryAlert.toggle()
                 } label: {
                     Text("Clear Chat History")
-                        .frame(maxWidth: .infinity)
                 }
+                .buttonStyle(.destructive)
             }
             
             Toggle("Enable Synthesizer", isOn: $vm.isEnableSynthesizer)
@@ -158,8 +156,8 @@ struct SettingView: View {
                 isPresentImagePicker.toggle()
             } label: {
                 Text("Select from Photo Library")
-                    .foregroundColor(.indigo)
             }
+            .buttonStyle(.primaryAction)
         } header: {
             Text("Profile").textCase(.none)
         } footer: {
@@ -172,10 +170,8 @@ struct SettingView: View {
                             isShowClearProfileImageAlert.toggle()
                         }
                 }
-                .alert(isPresented: $isShowClearProfileImageAlert) {
-                    Alert(title: Text("Do you want remove profile image?"), primaryButton: .destructive(Text("Confirm"), action: {
-                        vm.removeImageData()
-                    }), secondaryButton: .cancel())
+                .destructiveAlert(isPresented: $isShowClearProfileImageAlert, title: "Do you want remove profile image?") {
+                    vm.removeImageData()
                 }
             } else {
                 Text("No set profile")
@@ -184,6 +180,7 @@ struct SettingView: View {
     }
     #endif
 }
+
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
