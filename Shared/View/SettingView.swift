@@ -59,6 +59,14 @@ struct SettingView: View {
             TextField("API Key", text: $vm.apiKey)
                 .textFieldStyle(.automatic)
             
+            Picker("GPT Model", selection: $vm.model) {
+                ForEach(Model.GPT3.allCases) { model in
+                    Text(model.rawValue)
+                        .tag(model.rawValue)
+                }
+            }
+            .pickerStyle(.automatic)
+            
             Toggle("Stream", isOn: $vm.stream)
                 .toggleStyle(.switch)
             
