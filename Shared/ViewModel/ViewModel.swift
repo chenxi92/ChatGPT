@@ -222,13 +222,32 @@ extension ViewModel {
 
 // MARK: - Profile
 extension ViewModel {
+    
+    public func saveImageData(from url: URL) {
+        Task {
+            do {
+                logger.debug("save image data from: \(url.path)")
+                let data = try Data(contentsOf: url)
+                saveImageData(imageData: data)
+            } catch {
+                logger.error("save image data from \(url.path) error: \(error.localizedDescription)")
+            }
+        }
+    }
     public func saveImageData(imageData: Data?) {
         profileService.saveData(data: imageData)
+        Task { @MainActor in
+            self.imageData = imageData
+        }
     }
     
     public func removeImageData() {
-        imageData = nil
-        profileService.clear()
+        Task {
+            profileService.clear()
+        }
+        Task { @MainActor in
+            imageData = nil
+        }
     }
 }
 

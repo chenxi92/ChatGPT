@@ -10,8 +10,13 @@ import SwiftUI
 struct PrimaryActionButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .padding(.vertical, 10)
             .frame(maxWidth: .infinity)
+#if os(iOS)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 15)
+#else
+            .padding(.vertical, 5)
+#endif
             .background(.indigo.opacity(0.6))
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .scaleEffect(configuration.isPressed ? 1.03 : 1)

@@ -17,26 +17,25 @@ struct SettingView: View {
     #if os(iOS)
     @Environment(\.dismiss) var dismiss
     @State private var isPresentImagePicker: Bool = false
-    @State private var isShowClearProfileImageAlert: Bool = false
     #endif
     
+    @State private var isShowClearProfileImageAlert: Bool = false
     @State private var isShowClearChatHistoryAlert: Bool = false
     
     var body: some View {
         Form {
             APISettings()
-            
-            #if os(iOS)
             Profile()
-            #endif
-            
+                .destructiveAlert(isPresented: $isShowClearProfileImageAlert, title: "Do you want remove profile image?") {
+                    vm.removeImageData()
+                }
             OptionalSettings()
-        }
-        .destructiveAlert(isPresented: $isShowClearChatHistoryAlert, title: "Clear All Chat History?") {
-            vm.clearMessageData()
-            #if os(iOS)
-            dismiss()
-            #endif
+                .destructiveAlert(isPresented: $isShowClearChatHistoryAlert, title: "Clear All Chat History?") {
+                    vm.clearMessageData()
+                    #if os(iOS)
+                    dismiss()
+                    #endif
+                }
         }
         #if os(macOS)
         .padding()
@@ -157,30 +156,62 @@ struct SettingView: View {
             Button {
                 isPresentImagePicker.toggle()
             } label: {
-                Text("Select from Photo Library")
+                Text("Select Profile from your Phone")
             }
             .buttonStyle(.primaryAction)
         } header: {
             Text("Profile").textCase(.none)
         } footer: {
-            if let selectImageData = vm.imageData {
-                HStack {
-                    Text("Local Profile")
-                    Spacer()
-                    ProfileView(data: selectImageData)
-                        .onTapGesture {
-                            isShowClearProfileImageAlert.toggle()
-                        }
-                }
-                .destructiveAlert(isPresented: $isShowClearProfileImageAlert, title: "Do you want remove profile image?") {
-                    vm.removeImageData()
-                }
-            } else {
-                Text("No set profile")
+            ProfileSectionFooter()
+        }
+    }
+    #else
+    func Profile() -> some View {
+        Section {
+            Button {
+                openPannel()
+            } label: {
+                Text("Select Profile from your computer")
             }
+            .buttonStyle(.primaryAction)
+        } header: {
+//            Text("Profile")
+//                .textCase(.none)
+//                .font(.title3)
+        } footer: {
+            ProfileSectionFooter()
+        }
+    }
+    
+    func openPannel() {
+        let pannel = NSOpenPanel()
+        pannel.allowsMultipleSelection = false
+        pannel.canChooseDirectories = false
+        pannel.allowedContentTypes = [.png, .jpeg]
+        if pannel.runModal() == .OK, let url = pannel.url {
+            vm.saveImageData(from: url)
         }
     }
     #endif
+    
+    @ViewBuilder
+    func ProfileSectionFooter() -> some View {
+        if let selectImageData = vm.imageData {
+            HStack(alignment: .bottom) {
+                Text("Profile")
+                Spacer()
+                ProfileView(data: selectImageData)
+                    .onTapGesture {
+                        isShowClearProfileImageAlert.toggle()
+                    }
+                Text("click to delete")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        } else {
+            Text("No set profile")
+        }
+    }
 }
 
 

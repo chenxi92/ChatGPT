@@ -15,12 +15,12 @@ struct DestructiveButtonStyle: ButtonStyle {
             .padding(.vertical, 10)
             .padding(.horizontal, 15)
         #else
-            .padding(.vertical, 7)
+            .padding(.vertical, 5)
         #endif
             .font(.body.bold())
             .background(.red)
             .foregroundColor(configuration.isPressed ? .white : .black)
-            .clipShape(Capsule())
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             .scaleEffect(configuration.isPressed ? 1.05 : 1)
             .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }
