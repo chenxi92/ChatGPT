@@ -27,8 +27,7 @@ struct ContentView: View {
             NavigationLink {
                 SettingView()
             } label: {
-                Image(systemName: "gear")
-                    .foregroundColor(Color(UIColor.gray))
+                Image(systemName: "gearshape")
             }
         }
     }

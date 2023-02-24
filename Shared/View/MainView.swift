@@ -14,11 +14,25 @@ struct MainView: View {
     @FocusState var isTextFieldFocused: Bool
     
     @EnvironmentObject var vm: ViewModel
+    #if os(iOS)
+    @StateObject private var keyboard = KeyboardInfo.shared
+    #endif
     
     var body: some View {
         ScrollViewReader { proxy in
             VStack(spacing: 0) {
                 ChatScrollView()
+                    #if os(iOS)
+                    .onChange(of: keyboard.height) { newValue in
+                        if newValue != 0 {
+                            DispatchQueue.asyncAfterOnMain {
+                                withAnimation {
+                                    scrollToBottom(proxy: proxy)
+                                }
+                            }
+                        }
+                    }
+                    #endif
                 Divider()
                 BottomView(proxy: proxy)
                 Spacer()
@@ -30,15 +44,12 @@ struct MainView: View {
                 scrollToBottom(proxy: proxy)
             }
             .onAppear {
-                withAnimation(.easeInOut(duration: 0.3)) {
+                withAnimation {
                     scrollToBottom(proxy: proxy)
                 }
             }
         }
         .background(backgroundColor)
-        .onAppear {
-            isTextFieldFocused = true
-        }
         .alert(vm.errorMessage, isPresented: $vm.isShowError) {
             Button("OK", role: .cancel) {
                 vm.reset()
@@ -48,15 +59,25 @@ struct MainView: View {
     
     func ChatScrollView() -> some View {
         ScrollView {
+            /// fix bug: use LazyVStack in iOS can't be scroll to the bottom at the appearence.
+            #if os(macOS)
             LazyVStack(spacing: 0) {
-                ForEach(vm.messages) { message in
-                    MessageView(message: message) { message in
-                        Task { @MainActor in
-                            await vm.retry(message: message)
-                        }
-                    }
+                MessageViewList()
+            }
+            #else
+            MessageViewList()
+            #endif
+        }
+    }
+    
+    func MessageViewList() -> some View {
+        ForEach(vm.messages) { message in
+            MessageView(message: message) { message in
+                Task { @MainActor in
+                    await vm.retry(message: message)
                 }
             }
+            .tag(message.id)
         }
     }
     
@@ -111,17 +132,19 @@ struct MainView: View {
     }
     
     private func send(proxy: ScrollViewProxy) {
+        
+        isTextFieldFocused = false
+        scrollToBottom(proxy: proxy)
+        
         Task { @MainActor in
-            isTextFieldFocused = false
-            
-            scrollToBottom(proxy: proxy)
-
             await vm.sendTapped()
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                isTextFieldFocused = true
-            }
         }
+        
+#if os(macOS)
+        DispatchQueue.asyncAfterOnMain {
+            isTextFieldFocused = true
+        }
+#endif
     }
     
     private func scrollToBottom(proxy: ScrollViewProxy) {

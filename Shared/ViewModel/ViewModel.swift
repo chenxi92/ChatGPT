@@ -96,6 +96,9 @@ class ViewModel: ObservableObject {
     
     @MainActor
     func sendTapped() async {
+        guard !inputMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return
+        }
         let text = inputMessage
         inputMessage = ""
         await send(text: text)
