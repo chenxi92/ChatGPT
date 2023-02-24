@@ -37,9 +37,6 @@ struct MainView: View {
                 BottomView(proxy: proxy)
                 Spacer()
             }
-            .onTapGesture {
-                isTextFieldFocused = false
-            }
             .onChange(of: vm.messages.last?.responseText) { _ in
                 scrollToBottom(proxy: proxy)
             }
@@ -50,6 +47,9 @@ struct MainView: View {
             }
         }
         .background(backgroundColor)
+        .onTapGesture {
+            isTextFieldFocused = false
+        }
         .alert(vm.errorMessage, isPresented: $vm.isShowError) {
             Button("OK", role: .cancel) {
                 vm.reset()
