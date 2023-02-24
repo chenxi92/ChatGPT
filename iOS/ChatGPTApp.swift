@@ -10,7 +10,9 @@ import SwiftUI
 @main
 struct ChatGPTApp: App {
     init() {
-        UINavigationBar.appearance().backgroundColor = .systemBackground
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithDefaultBackground()
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }
     
     var body: some Scene {

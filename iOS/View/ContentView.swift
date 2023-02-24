@@ -19,11 +19,6 @@ struct ContentView: View {
                 .toolbar {
                     trailNavitationBar
                 }
-//                .alert(vm.errorMessage, isPresented: $vm.isShowError) {
-//                    Button("OK", role: .cancel) {
-//                        vm.reset()
-//                    }
-//                }
         }
     }
     
