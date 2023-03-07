@@ -14,6 +14,7 @@ struct AboutView: View {
     var body: some View {
         VStack(spacing: 10) {
             Image(nsImage: NSImage(named: "AppIcon")!)
+                .clipShape(Circle())
                 .padding()
             
             Text("\(Bundle.main.appName)")
