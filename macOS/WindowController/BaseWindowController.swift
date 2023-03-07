@@ -21,6 +21,7 @@ class BaseWindowController: NSWindowController, NSWindowDelegate {
         
         NSApp.activate(ignoringOtherApps: true)
         
+        window?.center()
         window?.makeKeyAndOrderFront(self)
         window?.delegate = self
     }
