@@ -37,25 +37,29 @@ struct ImagePicker: UIViewControllerRepresentable {
         }
         
         func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            defer {
+                self.parent.isPresented.toggle()
+            }
+            
             // click cancel
             guard let provider = results.first?.itemProvider else {
-                self.parent.isPresented.toggle()
+                return
+            }
+            guard provider.canLoadObject(ofClass: UIImage.self) else {
                 return
             }
 
-            if provider.canLoadObject(ofClass: UIImage.self) {
-                provider.loadObject(ofClass: UIImage.self) { image, error in
-                    if let error = error {
-                        print("load image errro: \(error)")
-                    }
-                    if let uiImage = image as? UIImage {
-                        Task { @MainActor in
-                            self.parent.selectImageData = uiImage.pngData()
-                        }
+            provider.loadObject(ofClass: UIImage.self) { image, error in
+                if let error = error {
+                    print("load image errro: \(error)")
+                    return
+                }
+                if let uiImage = image as? UIImage {
+                    Task { @MainActor in
+                        self.parent.selectImageData = uiImage.pngData()
                     }
                 }
             }
-            self.parent.isPresented.toggle()
         }
     }
 }
