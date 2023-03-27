@@ -36,6 +36,7 @@ struct MessageView: View {
             
             VStack(alignment: .leading) {
                 Text(message.sendText)
+                    .font(.title2)
                     .multilineTextAlignment(.leading)
                     .textSelection(.enabled)
             }
@@ -54,14 +55,8 @@ struct MessageView: View {
                 
                 if !message.responseText.isEmpty {
                     Markdown(message.responseText)
-                        .markdownStyle(
-                            MarkdownStyle(
-                                font: .system(.body, design: .serif),
-                                measurements: .init(
-                                    codeFontScale: 0.9
-                                )
-                            )
-                        )
+                        .textSelection(.enabled)
+                        .markdownTheme(.gitHub)
                 }
                 
                 if message.isInteractingWithChatGPT {

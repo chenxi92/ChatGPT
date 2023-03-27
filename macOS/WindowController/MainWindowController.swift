@@ -18,7 +18,7 @@ class MainWindowController: BaseWindowController {
         let vc = MainWindowController(window: window)
 
         let rootView = MainView()
-            .frame(minWidth: 650,
+            .frame(minWidth: 900,
                    maxWidth: .infinity,
                    minHeight: 600,
                    maxHeight: .infinity)
