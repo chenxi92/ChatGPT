@@ -20,10 +20,14 @@ public class KeyboardInfo: ObservableObject {
     }
 
     @objc func keyboardChanged(notification: Notification) {
+        var keyboardHeight: CGFloat
         if notification.name == UIApplication.keyboardWillHideNotification {
-            self.height = 0
+            keyboardHeight = 0
         } else {
-            self.height = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
+            keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.height = keyboardHeight
         }
     }
 
